@@ -50,15 +50,14 @@ function draw() {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   // Draw snake
-  ctx.fillStyle = "#0f0";
-  for (let segment of snake) {
-    ctx.fillRect(segment.x * gridSize, segment.y * gridSize, gridSize - 1, gridSize - 1);
-  }
-
-  // Draw apple
-  ctx.fillStyle = "red";
-  ctx.fillRect(apple.x * gridSize, apple.y * gridSize, gridSize - 1, gridSize - 1);
+for (let i = 0; i < snake.length; i++) {
+  ctx.fillStyle = (i === 0) ? "limegreen" : "green";
+  ctx.fillRect(snake[i].x, snake[i].y, box, box);
 }
+
+// Draw food
+ctx.fillStyle = "red";
+ctx.fillRect(food.x, food.y, box, box);
 
 function placeApple() {
   apple.x = Math.floor(Math.random() * tileCount);
@@ -81,3 +80,5 @@ document.addEventListener("keydown", e => {
 gameLoop();
 // Initialize apple position
 placeApple();   
+//Game loop
+setInterval(draw, 150)
