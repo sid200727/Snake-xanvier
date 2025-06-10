@@ -1,13 +1,19 @@
-const canvas = document.getElementById("gameCanvas");
+const canvas = document.getElementById("snake");
 const ctx = canvas.getContext("2d");
+const box = 32;
 
-const gridSize = 20;
-const tileCount = canvas.width / gridSize;
+let direction = "RIGHT"; // start moving right
+let snake = [{ x: 9 * box, y: 10 * box }];
+let food = {
+  x: Math.floor(Math.random() * 17 + 1) * box,
+  y: Math.floor(Math.random() * 15 + 3) * box
+};
+let game;
 
-let snake = [{ x: 10, y: 10 }];
-let apple = { x: 5, y: 5 };
-let direction = { x: 0, y: 0 };
-let score = 0;
+window.onload = () => {
+  game = setInterval(draw, 150); // Start game automatically
+};
+
 
 function gameLoop() {
   update();
@@ -68,12 +74,21 @@ function updateScore() {
   document.getElementById("score").innerText = "Score: " + score;
 }
 
-document.addEventListener("keydown", e => {
-  switch (e.key) {
-    case "ArrowUp": if (direction.y === 0) direction = { x: 0, y: -1 }; break;
-    case "ArrowDown": if (direction.y === 0) direction = { x: 0, y: 1 }; break;
-    case "ArrowLeft": if (direction.x === 0) direction = { x: -1, y: 0 }; break;
-    case "ArrowRight": if (direction.x === 0) direction = { x: 1, y: 0 }; break;
+let game; // Declare this near top
+let started = false; // Track game state
+
+document.addEventListener("keydown", event => {
+  if (!started) {
+    started = true;
+    game = setInterval(draw, 150); // Start game only once
+  }
+
+  if (event.key === "ArrowLeft" && direction !== "RIGHT") direction = "LEFT";
+  else if (event.key === "ArrowUp" && direction !== "DOWN") direction = "UP";
+  else if (event.key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT";
+  else if (event.key === "ArrowDown" && direction !== "UP") direction = "DOWN";
+});
+
   }
 });
 
