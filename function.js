@@ -38,15 +38,10 @@ function draw() {
   if (direction === "DOWN") snakeY += box;
 
   // Game Over
-  if (
-    snakeX < 0 ||
-    snakeX >= 19 * box ||
-    snakeY < 0 ||
-    snakeY >= 19 * box ||
-    collision(snakeX, snakeY, snake)
-  ) {
-    clearInterval(game);
-    alert("Game Over! Score: " + score);
+  if (snakeX < 0) snakeX = canvas.width - box;
+else if (snakeX >= canvas.width) snakeX = 0;
+if (snakeY < 0) snakeY = canvas.height - box;
+else if (snakeY >= canvas.height) snakeY = 0;
     return;
   }
 
