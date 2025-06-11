@@ -1,39 +1,39 @@
 body {
   background-color: black;
+  color: green;
+  font-family: Arial, sans-serif;
   text-align: center;
-  font-family: sans-serif;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  color: white;
+}
+
+canvas {
+  display: block;
+  margin: 0 auto;
+  border: 2px solid green;
+  background-color: black;
+}
+
+#score {
+  margin: 10px 0;
+  font-size: 18px;
   color: green;
 }
 
-#snake {
-  border: 1px solid #0f0;
-  margin-top: 20px;
-  background-color: #000;
-}
-
-#scoreBox {
-  margin-top: 10px;
-  font-size: 20px;
-}
-
-#restartBtn {
-  margin-top: 20px;
+#restart-btn {
   padding: 10px 20px;
+  font-size: 16px;
   background-color: green;
   color: black;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
+  border: 2px solid lime;
   border-radius: 5px;
+  cursor: pointer;
 }
 
-#restartBtn:hover {
-  background-color: limegreen;
+#restart-btn:hover {
+  background-color: lime;
 }
-#game-title {
-  text-align: center;
-  color:lavender;
-  font-size: 2em;
-  margin-bottom: 10px;
-}
-
