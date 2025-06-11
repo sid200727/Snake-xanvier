@@ -1,99 +1,114 @@
 const canvas = document.getElementById("snake");
 const ctx = canvas.getContext("2d");
-const box = 32;
 
-let direction = "RIGHT"; // start moving right
-let snake = [{ x: 9 * box, y: 10 * box }];
+const box = 32;
+let score = 0;
+let speed = 150; // initial speed
+let game;
+
+let snake = [];
+snake[0] = { x: 9 * box, y: 10 * box };
+
+let direction = "RIGHT";
+
 let food = {
   x: Math.floor(Math.random() * 17 + 1) * box,
   y: Math.floor(Math.random() * 15 + 3) * box
 };
-let game;
 
-window.onload = () => {
-  game = setInterval(draw, 150); // Start game automatically
-};
+// Draw everything
+function draw() {
+  ctx.fillStyle = "black";
+  ctx.fillRect(0, 0, 19 * box, 19 * box);
 
+  for (let i = 0; i < snake.length; i++) {
+    ctx.fillStyle = i === 0 ? "green" : "lightgreen";
+    ctx.fillRect(snake[i].x, snake[i].y, box, box);
+  }
 
-function gameLoop() {
-  update();
-  draw();
-  setTimeout(gameLoop, 100);
-}
+  ctx.fillStyle = "red";
+  ctx.fillRect(food.x, food.y, box, box);
 
-function update() {
-  // Move snake
-  const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
+  let snakeX = snake[0].x;
+  let snakeY = snake[0].y;
 
-  // Game over conditions
+  if (direction === "LEFT") snakeX -= box;
+  if (direction === "UP") snakeY -= box;
+  if (direction === "RIGHT") snakeX += box;
+  if (direction === "DOWN") snakeY += box;
+
+  // Game Over
   if (
-    head.x < 0 || head.x >= tileCount ||
-    head.y < 0 || head.y >= tileCount ||
-    snake.some(segment => segment.x === head.x && segment.y === head.y)
+    snakeX < 0 ||
+    snakeX >= 19 * box ||
+    snakeY < 0 ||
+    snakeY >= 19 * box ||
+    collision(snakeX, snakeY, snake)
   ) {
+    clearInterval(game);
     alert("Game Over! Score: " + score);
-    snake = [{ x: 10, y: 10 }];
-    direction = { x: 0, y: 0 };
-    score = 0;
-    updateScore();
     return;
   }
 
-  snake.unshift(head);
-
-  // Apple eaten?
-  if (head.x === apple.x && head.y === apple.y) {
+  // Eat food
+  if (snakeX === food.x && snakeY === food.y) {
     score++;
-    updateScore();
-    placeApple();
+    document.getElementById("score").textContent = score;
+
+    // Move food
+    food = {
+      x: Math.floor(Math.random() * 17 + 1) * box,
+      y: Math.floor(Math.random() * 15 + 3) * box
+    };
+
+    // Increase speed
+    if (speed > 50) {
+      speed -= 10;
+      clearInterval(game);
+      game = setInterval(draw, speed);
+    }
   } else {
     snake.pop();
   }
+
+  let newHead = { x: snakeX, y: snakeY };
+  snake.unshift(newHead);
 }
 
-function draw() {
-  ctx.fillStyle = "#111";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  // Draw snake
-for (let i = 0; i < snake.length; i++) {
-  ctx.fillStyle = (i === 0) ? "limegreen" : "green";
-  ctx.fillRect(snake[i].x, snake[i].y, box, box);
-}
-
-// Draw food
-ctx.fillStyle = "red";
-ctx.fillRect(food.x, food.y, box, box);
-
-function placeApple() {
-  apple.x = Math.floor(Math.random() * tileCount);
-  apple.y = Math.floor(Math.random() * tileCount);
-}
-
-function updateScore() {
-  document.getElementById("score").innerText = "Score: " + score;
-}
-
-let game; // Declare this near top
-let started = false; // Track game state
-
+// Handle input
 document.addEventListener("keydown", event => {
-  if (!started) {
-    started = true;
-    game = setInterval(draw, 150); // Start game only once
-  }
-
   if (event.key === "ArrowLeft" && direction !== "RIGHT") direction = "LEFT";
   else if (event.key === "ArrowUp" && direction !== "DOWN") direction = "UP";
   else if (event.key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT";
   else if (event.key === "ArrowDown" && direction !== "UP") direction = "DOWN";
 });
 
+// Collision detection
+function collision(x, y, array) {
+  for (let i = 0; i < array.length; i++) {
+    if (x === array[i].x && y === array[i].y) {
+      return true;
+    }
   }
-});
+  return false;
+}
 
-gameLoop();
-// Initialize apple position
-placeApple();   
-//Game loop
-setInterval(draw, 150)
+// Restart game function
+function restartGame() {
+  clearInterval(game);
+  score = 0;
+  speed = 150;
+  direction = "RIGHT";
+  snake = [{ x: 9 * box, y: 10 * box }];
+  food = {
+    x: Math.floor(Math.random() * 17 + 1) * box,
+    y: Math.floor(Math.random() * 15 + 3) * box
+  };
+  document.getElementById("score").textContent = score;
+  game = setInterval(draw, speed);
+}
+
+// Start on load
+window.onload = () => {
+  game = setInterval(draw, speed);
+};
