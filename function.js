@@ -107,6 +107,10 @@ function restartGame() {
   document.getElementById("score").textContent = score;
   game = setInterval(draw, speed);
 }
+// Add restart button functionality
+document.getElementById("restart").addEventListener("click", restartGame);
+// Add score display    
+document.getElementById("score").textContent = score;
 
 // Start on load
 window.onload = () => {
