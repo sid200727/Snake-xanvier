@@ -107,7 +107,23 @@ document.getElementById("restart").addEventListener("click", restartGame);
 // Add score display    
 document.getElementById("score").textContent = score;
 
+
 // Start on load
 window.onload = () => {
   game = setInterval(draw, speed);
 };
+// Draw grid lines
+ctx.strokeStyle = "#333"; // dark gray
+for (let i = 0; i < canvas.width; i += box) {
+  ctx.beginPath();
+  ctx.moveTo(i, 0);
+  ctx.lineTo(i, canvas.height);
+  ctx.stroke();
+}
+for (let j = 0; j < canvas.height; j += box) {
+  ctx.beginPath();
+  ctx.moveTo(0, j);
+  ctx.lineTo(canvas.width, j);
+  ctx.stroke();
+}
+
