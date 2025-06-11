@@ -63,7 +63,7 @@ function draw() {
 
     // Increase speed
     if (speed > 50) {
-      speed -= 10;
+      speed -= 2;
       clearInterval(game);
       game = setInterval(draw, speed);
     }
