@@ -30,3 +30,10 @@ body {
 #restartBtn:hover {
   background-color: limegreen;
 }
+#game-title {
+  text-align: center;
+  color:lavender;
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
