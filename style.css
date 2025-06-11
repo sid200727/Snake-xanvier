@@ -1,21 +1,32 @@
 body {
-  background-color: #000;
-  color: #0f0;
-  font-family: monospace;
+  background-color: black;
   text-align: center;
-  margin-top: 30px;
+  font-family: sans-serif;
+  color: green;
 }
 
-canvas {
-  background-color: #111;
-  border: 2px solid rgb(57, 150, 220);
+#snake {
+  border: 1px solid #0f0;
+  margin-top: 20px;
+  background-color: #000;
 }
 
-h1 {
-  margin-bottom: 10px;
-}
-
-#score {
+#scoreBox {
   margin-top: 10px;
-  font-size: 18px;
+  font-size: 20px;
+}
+
+#restartBtn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: green;
+  color: black;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#restartBtn:hover {
+  background-color: limegreen;
 }
