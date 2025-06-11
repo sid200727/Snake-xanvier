@@ -3,7 +3,7 @@ const ctx = canvas.getContext("2d");
 
 const box = 20;
 let score = 0;
-let speed = 150;
+let speed = 90;
 
 let snake = [{ x: 160, y: 160 }];
 let food = spawnFood();
