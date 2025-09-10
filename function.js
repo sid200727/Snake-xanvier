@@ -94,3 +94,4 @@ function draw() {
 }
 
 let game = setInterval(draw, speed);
+
